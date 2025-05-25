@@ -1,10 +1,9 @@
-import { Transform } from "class-transformer";
-import { IsEmpty, IsEnum, IsInt, IsNotEmpty, IsOptional, IsString, Matches, MaxLength } from "class-validator";
+import { IsEnum, IsNotEmpty, IsOptional, IsString, Matches, MaxLength } from "class-validator";
 import { TamanhoCamisa } from "src/enums/tamanho-camisa.enum";
 
 export class CreateUsuarioDTO {
     @IsNotEmpty({ message: "O nome é obrigatório." })
-    @IsString({ message: "O nome deve ser uma string." })
+    @IsString({ message: "O nome deve ser um texto." })
     readonly nome: string;
 
     @IsNotEmpty({ message: "O telefone do usuário é obrigatório." })
@@ -20,11 +19,11 @@ export class CreateUsuarioDTO {
     readonly telefoneResponsavel: string;
 
     @IsNotEmpty({ message: "O nome do responsável é obrigatório." })
-    @IsString({ message: "O nome do responsável deve ser uma string." })
+    @IsString({ message: "O nome do responsável deve ser um texto." })
     readonly nomeResponsavel: string;
 
     @IsNotEmpty({ message: "O nome do responsável é obrigatório." })
-    @IsString({ message: "O parentesco do responsável deve ser uma string." })
+    @IsString({ message: "O parentesco do responsável deve ser um texto." })
     @MaxLength(30, { message: "O parentesco do responsável deve ter no máximo 30 caracteres." })
     readonly parentescoResponsavel: string;
 
@@ -32,22 +31,26 @@ export class CreateUsuarioDTO {
     @IsEnum(TamanhoCamisa, { message: "O tamanho da camisa deve ser um dos seguintes valores: PP, P, M, G, GG ou XG." })
     readonly tamanhoCamisa: TamanhoCamisa;
 
-    @IsString({ message: "O campo 'temMedicamento' deve ser uma string." })
-    @MaxLength(200, { message: "O campo 'temMedicamento' deve ter no máximo 100 caracteres." })
+    @IsString({ message: "O campo 'temMedicamento' deve ser um texto." })
+    @MaxLength(200, { message: "O campo 'temMedicamento' deve ter no máximo 200 caracteres." })
     @IsOptional()
     readonly temMedicamento: string
 
-    @IsString({ message: "O campo 'temAlergia' deve ser uma string." })
+    @IsString({ message: "O campo 'temAlergia' deve ser um texto." })
     @MaxLength(200, { message: "O campo 'temAlergia' deve ter no máximo 200 caracteres." })
     @IsOptional()
     readonly temAlergia: string;
 
-    @IsString({ message: "O campo 'temMedicamentoControlado' deve ser uma string." })
+    @IsString({ message: "O campo 'temMedicamentoControlado' deve ser um texto." })
     @MaxLength(200, { message: "O campo 'temMedicamentoControlado' deve ter no máximo 200 caracteres." })
     @IsOptional()
     readonly temMedicamentoControlado: string;
 
-    @IsString({ message: "O nome do grupo deve ser uma string." })
+    @IsString({ message: "O nome do grupo deve ser um texto." })
     @IsOptional()
     readonly nomeGrupo: string;
+
+    @IsOptional()
+    @IsString({message: "O campo 'Rede' deve ser tipo texto"})
+    readonly rede: string
 }
