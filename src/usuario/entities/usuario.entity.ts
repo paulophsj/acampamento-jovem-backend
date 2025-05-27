@@ -2,7 +2,7 @@ import { Column, Entity } from "typeorm";
 import { EntidadeAuditavel } from "../../utils/entidade-auditavel.util";
 import { TamanhoCamisa } from "src/enums/tamanho-camisa.enum";
 
-@Entity()
+@Entity("usuario")
 export class Usuario extends EntidadeAuditavel {
     @Column({ nullable: false, type: 'text' })
     nome: string;

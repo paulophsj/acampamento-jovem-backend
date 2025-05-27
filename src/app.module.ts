@@ -4,6 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Usuario } from './usuario/entities/usuario.entity';
 import { UsuarioModule } from './usuario/usuario.module';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
@@ -19,7 +20,8 @@ import { UsuarioModule } from './usuario/usuario.module';
       synchronize: true,
       autoLoadEntities: true,
     }),
-    UsuarioModule
+    UsuarioModule,
+    AdminModule
   ],
 })
 export class AppModule {}
