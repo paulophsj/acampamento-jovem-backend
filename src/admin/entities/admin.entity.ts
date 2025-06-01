@@ -5,6 +5,8 @@ import { Column, Entity } from "typeorm";
 export class Admin extends EntidadeAuditavel {
     @Column({type: "text"})
     nome: string;
+    @Column({type: 'text', nullable: false, unique: true})
+    email: string
     @Column({ type: "text"})
     password: string;
 }

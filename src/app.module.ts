@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Usuario } from './usuario/entities/usuario.entity';
 import { UsuarioModule } from './usuario/usuario.module';
 import { AdminModule } from './admin/admin.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -21,7 +22,8 @@ import { AdminModule } from './admin/admin.module';
       autoLoadEntities: true,
     }),
     UsuarioModule,
-    AdminModule
+    AdminModule,
+    AuthModule
   ],
 })
 export class AppModule {}

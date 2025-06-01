@@ -10,6 +10,6 @@ export class AdminController {
 
     @Post("create")
     async createUser(@Body() AdminDTO: CreateAdminDTO) {
-        return await this.adminService.createUser(AdminDTO);
+        return await this.adminService.createAdmin(AdminDTO);
     }
 }
