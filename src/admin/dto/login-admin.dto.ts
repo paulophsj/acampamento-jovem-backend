@@ -1,7 +1,7 @@
 import { IsEmail, IsNotEmpty, IsString } from "class-validator";
 
 export class LoginAminDTO {
-    @IsEmail({}, { message: "Formato inválido" })
+    @IsEmail({}, { message: "Insira um formato de email valido" })
     @IsNotEmpty({ message: "O email deve ser obrigatório" })
     readonly email: string
 
