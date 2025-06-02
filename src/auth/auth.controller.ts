@@ -17,10 +17,11 @@ export class AuthController {
         const { access_token } = await this.authService.loginAdmin(adminDto);
         res.cookie("access_token", access_token, {
             httpOnly: true,
-            secure: false,
-            sameSite: 'none',
+            secure: false, //Alterar para TRUE no HTTPS
+            sameSite: 'lax', //Alterar para NONE no HTTPS
             maxAge: 1000*60,
-        }).status(HttpStatus.OK).json({message: "Login bem-sucedido"})
+            path: '/'
+        }).status(HttpStatus.OK).json({access_token: access_token, message: "Login bem-sucedido"})
     }
     @UseGuards(AuthGuard)
     @Get('profile')
