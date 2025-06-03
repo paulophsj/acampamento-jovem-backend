@@ -6,6 +6,7 @@ import { Usuario } from './usuario/entities/usuario.entity';
 import { UsuarioModule } from './usuario/usuario.module';
 import { AdminModule } from './admin/admin.module';
 import { AuthModule } from './auth/auth.module';
+import { MuralMensagemModule } from './mural_mensagem/mural_mensagem.module';
 
 @Module({
   imports: [
@@ -23,7 +24,8 @@ import { AuthModule } from './auth/auth.module';
     }),
     UsuarioModule,
     AdminModule,
-    AuthModule
+    AuthModule,
+    MuralMensagemModule
   ],
 })
 export class AppModule {}
