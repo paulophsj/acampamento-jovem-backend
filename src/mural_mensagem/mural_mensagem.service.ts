@@ -3,6 +3,7 @@ import { MuralMensagem } from "./entities/mural_mensagem.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Like, Repository } from "typeorm";
 import { CreateMensagemDTO } from "./dto/create-mensagem.dto";
+import { UpdateMensagemDTO } from "./dto/update-mensagem.dto";
 
 @Injectable()
 export class MuralMensagemService {
@@ -43,5 +44,13 @@ export class MuralMensagemService {
             throw new NotFoundException("Nenhuma mensagem a ser exibida")
         }
         return mensagens
+    }
+    async atualizarMensagemForum(id: number, novaMensagem: UpdateMensagemDTO): Promise<MuralMensagem>{
+        const mensagem = await this.muralMesagemRpository.findOneByOrFail({id})
+        if(!mensagem){
+            throw new NotFoundException("Mensagem não encontrada")
+        }
+        mensagem.isActive = novaMensagem.isActive
+        return await this.muralMesagemRpository.save(mensagem)
     }
 }

@@ -1,8 +1,9 @@
-import { Body, Controller, Get, Post, Query, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Param, Patch, Post, Query, UseGuards } from "@nestjs/common";
 import { MuralMensagemService } from "./mural_mensagem.service";
 import { MuralMensagem } from "./entities/mural_mensagem.entity";
 import { CreateMensagemDTO } from "./dto/create-mensagem.dto";
 import { AuthGuard } from "src/auth/auth.guards";
+import { UpdateMensagemDTO } from "./dto/update-mensagem.dto";
 
 @Controller('mural_mensagem')
 export class MuralMensagemController {
@@ -28,5 +29,10 @@ export class MuralMensagemController {
     @Post('/')
     async salvarMensagem(@Body() mensagem: CreateMensagemDTO): Promise<MuralMensagem>{
         return this.muralMensagemService.salvarMensagem(mensagem)
+    }
+    @UseGuards(AuthGuard)
+    @Patch(':id')
+    async atualizarMensagem(@Param('id') id: number, @Body() novaMensagem: UpdateMensagemDTO): Promise<MuralMensagem>{
+        return this.muralMensagemService.atualizarMensagemForum(id, novaMensagem)
     }
 }
