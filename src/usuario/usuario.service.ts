@@ -1,7 +1,7 @@
-import { ConflictException, Injectable } from "@nestjs/common";
+import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { CreateUsuarioDTO } from "src/usuario/dto/create-usuario.dto";
-import { Repository } from "typeorm";
+import { EntityNotFoundError, Repository } from "typeorm";
 import { Usuario } from "./entities/usuario.entity";
 
 @Injectable()
@@ -33,5 +33,34 @@ export class UsuarioService {
         }
         const novoUsuario = this.usuarioRepository.create(createUsuarioDTO);
         return await this.usuarioRepository.save(novoUsuario);
+    }
+    async getAllUsers(): Promise<Usuario[]> {
+        const users = await this.usuarioRepository.find()
+        if (!users) {
+            throw new NotFoundException("Nenhum usuário está cadastrado.")
+        }
+        return users
+
+    }
+    async updateUser(id: number, usuario: CreateUsuarioDTO): Promise<Usuario> {
+        const existingUser = await this.usuarioRepository.findOneBy({ id });
+        if (!existingUser) {
+            throw new NotFoundException("Nenhum usuário com o id relacionado foi encontrado.");
+        }
+
+        await this.usuarioRepository.update(id, { ...usuario });
+
+        return await this.usuarioRepository.findOneByOrFail({ id });
+    }
+    async findOneUser(id: number): Promise<Usuario> {
+        try {
+            return await this.usuarioRepository.findOneByOrFail({ id });
+        } catch (error) {
+            throw new NotFoundException(`Usuário com id ${id} não foi encontrado.`);
+        }
+    }
+    async deleteUser(id: number):Promise<void>{
+        const findUser = await this.findOneUser(id)
+        await this.usuarioRepository.remove(findUser)
     }
 }

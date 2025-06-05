@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post, Query, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, InternalServerErrorException, Param, Patch, Post, Query, UseGuards } from "@nestjs/common";
 import { MuralMensagemService } from "./mural_mensagem.service";
 import { MuralMensagem } from "./entities/mural_mensagem.entity";
 import { CreateMensagemDTO } from "./dto/create-mensagem.dto";
@@ -16,23 +16,27 @@ export class MuralMensagemController {
     async getAllMessages(): Promise<MuralMensagem[]> {
         return await this.muralMensagemService.getAllMessages()
     }
-    @UseGuards(AuthGuard)
-    @Get('buscar')
-    async buscarMensagem(
-        @Query('id') id?: number,
-        @Query('nome') nome?: string,
-        @Query('prefixo') prefixo?: string,
-        @Query('nomeUsuario') nomeUsuario?: string
-    ) {
-        return this.muralMensagemService.buscarMensagem({ id, nome, prefixo, nomeUsuario });
+
+    @Get('/find')
+    async mensagensAoUsuarios(): Promise<MuralMensagem[]> {
+        return await this.muralMensagemService.mensagensAosUsuarios()
     }
     @Post('/')
-    async salvarMensagem(@Body() mensagem: CreateMensagemDTO): Promise<MuralMensagem>{
+    async salvarMensagem(@Body() mensagem: CreateMensagemDTO): Promise<MuralMensagem> {
+        const {isActive} = mensagem
+        if(isActive){
+            throw new InternalServerErrorException("Você não pode passar esse parâmetro")
+        }
         return this.muralMensagemService.salvarMensagem(mensagem)
     }
     @UseGuards(AuthGuard)
     @Patch(':id')
-    async atualizarMensagem(@Param('id') id: number, @Body() novaMensagem: UpdateMensagemDTO): Promise<MuralMensagem>{
+    async atualizarMensagem(@Param('id') id: number, @Body() novaMensagem: UpdateMensagemDTO): Promise<MuralMensagem> {
         return this.muralMensagemService.atualizarMensagemForum(id, novaMensagem)
+    }
+    @UseGuards(AuthGuard)
+    @Delete(":id")
+    async deleteMessage(@Param("id") id: number): Promise<void> {
+        return this.muralMensagemService.deletarMensagem(id)
     }
 }
