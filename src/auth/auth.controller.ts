@@ -21,7 +21,6 @@ export class AuthController {
             sameSite: 'none', //Alterar para NONE no HTTPS
             maxAge: 1000*60,
             path: '/',
-            domain: '.acampamento-jovem-backend.onrender.com'
         }).status(HttpStatus.OK).json({access_token: access_token, message: "Login bem-sucedido"})
     }
     @UseGuards(AuthGuard)
