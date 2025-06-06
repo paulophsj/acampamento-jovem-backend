@@ -16,9 +16,9 @@ export class AuthController {
     ) {
         const { access_token } = await this.authService.loginAdmin(adminDto);
         res.cookie("access_token", access_token, {
-            httpOnly: true,
-            secure: true, //Alterar para TRUE no HTTPS
-            sameSite: 'none', //Alterar para NONE no HTTPS
+            httpOnly: false,
+            secure: true,
+            sameSite: 'none',
             maxAge: 1000*60,
             path: '/',
         }).status(HttpStatus.OK).json({access_token: access_token, message: "Login bem-sucedido"})
