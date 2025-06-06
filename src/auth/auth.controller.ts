@@ -15,13 +15,7 @@ export class AuthController {
         @Res({ passthrough: true }) res: Response
     ) {
         const { access_token } = await this.authService.loginAdmin(adminDto);
-        res.cookie("access_token", access_token, {
-            httpOnly: false,
-            secure: true,
-            sameSite: 'none',
-            maxAge: 1000*60,
-            path: '/',
-        }).status(HttpStatus.OK).json({access_token: access_token, message: "Login bem-sucedido"})
+        return({access_token: access_token, message: "Login bem-sucedido"})
     }
     @UseGuards(AuthGuard)
     @Get('profile')
