@@ -16,7 +16,7 @@ export class AuthController {
     ) {
         const { access_token } = await this.authService.loginAdmin(adminDto);
         res.cookie("access_token", access_token, {
-            httpOnly: false,
+            httpOnly: true,
             secure: true,
             sameSite: 'none',
             maxAge: 1000*60,
