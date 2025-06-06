@@ -13,7 +13,7 @@ import { Admin } from 'src/admin/entities/admin.entity';
     JwtModule.register({
       global: true,
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '60s' },
+      signOptions: { expiresIn: '5m' },
     }),
   ],
   providers: [AuthService],
