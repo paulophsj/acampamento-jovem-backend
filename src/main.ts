@@ -3,7 +3,7 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import * as cookieParser from 'cookie-parser';
 
-const allowedOrigins = process.env.PRODUCTION
+const allowedOrigins = process.env.PRODUCTION === "true"
   ? ['https://acampamento-jovem.vercel.app']
   : ['http://localhost:3000'];
 
