@@ -73,5 +73,8 @@ export class CreateUsuarioDTO {
 
     @IsOptional()
     @IsString({ message: "O campo 'Rede' deve ser tipo texto" })
+    @Matches(/^(?!^\d+$).*$/, {
+        message: "O campo 'rede' não pode ser apenas números.",
+    })
     readonly rede: string
 }
