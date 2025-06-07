@@ -23,10 +23,6 @@ export class MuralMensagemController {
     }
     @Post('/')
     async salvarMensagem(@Body() mensagem: CreateMensagemDTO): Promise<MuralMensagem> {
-        const {isActive} = mensagem
-        if(isActive){
-            throw new InternalServerErrorException("Você não pode passar esse parâmetro")
-        }
         return this.muralMensagemService.salvarMensagem(mensagem)
     }
     @UseGuards(AuthGuard)

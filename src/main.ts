@@ -9,7 +9,9 @@ const allowedOrigins = process.env.PRODUCTION === "true"
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({
+    whitelist: true,
+  }));
   app.use(cookieParser());
   app.enableCors({
     credentials: true,
